@@ -29,7 +29,7 @@ A lightweight YouTube search and player for the terminal.
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/bashyt.git
+https://github.com/Soumyadeep-Dey123/bashyt.git
 cd bashyt
 ```
 
