@@ -11,7 +11,7 @@ A lightweight YouTube search and player for the terminal.
 - ▶️ Playback through `mpv`
 - 🚫 No video downloads
 - ⚡ Direct YouTube streaming through `yt-dlp`
-- 🎥 VP9 video up to 1080p by default
+- 🎥 Best available quality — capped by your screen resolution and connection speed
 - 🔊 Opus audio
 - 🖥️ Works with mpv's hardware acceleration
 - 🐚 Written entirely in Bash
@@ -102,13 +102,14 @@ Direct YouTube stream
 
 ## Playback
 
-The default format selection is:
+`bashyt` plays the best available quality by default, capped by two things:
 
-```text
-bestvideo[vcodec^=vp9][height<=1080]+bestaudio/best
-```
+- **Your screen** — the video never exceeds your screen height (detected with `xrandr`/`xdpyinfo`).
+- **Your connection** — a short download probe (`curl`) before playback picks the highest resolution your bandwidth can sustain: 4K on fast connections, down to 480p on very slow ones.
 
-This prioritizes VP9 video up to 1080p with the best available audio, falling back to another suitable format when necessary.
+If a cap can't be detected, the strongest known cap is used instead. To pin an exact format, set the `BASHYT_FORMAT` environment variable (e.g. `BASHYT_FORMAT='bestvideo[height<=720]+bestaudio/best' bashyt "query"`).
+
+The mpv window autofits to 90% of your screen size, preserving the video's aspect ratio. Override it with the `BASHYT_AUTOFIT` environment variable (e.g. `BASHYT_AUTOFIT=75%x75% bashyt "query"`).
 
 ## Why bashyt?
 
@@ -126,6 +127,12 @@ There are many YouTube terminal applications. `bashyt` aims to stay simple:
 Issues, improvements and pull requests are welcome.
 
 If you have an idea for a feature or find a bug, feel free to open an issue.
+
+## Version history
+
+- **1.2.0** — Best available quality by default, capped by your screen resolution and connection speed; `BASHYT_FORMAT` env var to pin an exact format.
+- **1.1.0** — The mpv window now autofits to 90% of the screen; `BASHYT_AUTOFIT` env var to override.
+- **1.0.1** — Initial release: YouTube search via yt-dlp, selection with fzf, playback with mpv.
 
 ## License
 
